@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+
 // 1. Захист за секретним ключем
 $secret_key = "my-secret-key"; // Заміни на свій випадковий ключ
 if (!isset($_POST['key']) || $_POST['key'] !== $secret_key) {
@@ -19,5 +22,5 @@ $text = "Нове замовлення:\n" . $order;
 file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=" . urlencode($text));
 
 // 5. Відповідь
-echo "OK";
+echo json_encode(["ok" => true]);
 ?>

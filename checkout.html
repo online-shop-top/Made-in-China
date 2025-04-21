@@ -79,9 +79,6 @@
   </form>
 
   <script>
-    const BOT_TOKEN = "8183148351:AAGytuw_-K87F175JLUWiGan8J816pliJdY";
-    const CHAT_ID = "2102040810";
-
     document.getElementById("orderForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -111,8 +108,8 @@
 
       fetch(`https://made-in-china.pp.ua/api/send.php`, {
         method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
           key: "my-secret-key", // той самий секретний ключ, що й у PHP
@@ -125,7 +122,7 @@
           document.getElementById("successMsg").textContent = "Замовлення успішно надіслано!";
           localStorage.removeItem('cart');
           alert("Дякуємо. Замовлення успішно надіслано!");
-          window.location.href = "index.html"; // Перехід на головну сторінку
+          window.location.href = "index.html";
         } else {
           alert("Помилка надсилання. Спробуйте ще раз.");
         }

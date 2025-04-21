@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Деталі товару | Made-in-China</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; padding: 20px; background: #f4f4f4; }
+    .product-details {
+      background: white; max-width: 600px; margin: auto;
+      padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    img { max-width: 100%; border-radius: 10px; margin-bottom: 20px; }
+    h1 { font-size: 24px; }
+    .price { font-size: 20px; font-weight: bold; margin: 10px 0; }
+    .btn {
+      display: inline-block; background: #007bff; color: white;
+      padding: 10px 15px; border-radius: 5px; text-decoration: none;
+    }
+    .btn:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+
+<div class="product-details" id="productDetails">
+  <!-- Деталі завантажаться тут -->
+</div>
+
+<script>
+  const product = JSON.parse(localStorage.getItem('selectedProduct'));
+  if (product) {
+    document.getElementById('productDetails').innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h1>${product.name}</h1>
+      <p>${product.description}</p>
+      <div class="price">₴${product.price}</div>
+      <a href="index.html" class="btn">Назад до каталогу</a>
+    `;
+  } else {
+    document.getElementById('productDetails').innerHTML = '<p>Товар не знайдено.</p>';
+  }
+</script>
+
+</body>
+</html>

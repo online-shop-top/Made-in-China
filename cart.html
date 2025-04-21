@@ -57,6 +57,12 @@
       margin-right: 15px;
     }
 
+    .item input {
+      width: 50px;
+      margin-right: 10px;
+      text-align: center;
+    }
+
     .item button {
       background: red;
       border: none;
@@ -127,14 +133,15 @@
     let total = 0;
 
     cart.forEach((item, index) => {
-      total += item.price;
+      total += item.price * item.quantity;
 
       const div = document.createElement('div');
       div.className = 'item';
       div.innerHTML = `
         <img src="${item.image}" alt="${item.name}">
         <h3>${item.name}</h3>
-        <div class="price">₴${item.price}</div>
+        <div class="price">₴${item.price * item.quantity}</div>
+        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
         <button onclick="removeItem(${index})">❌</button>
       `;
       container.appendChild(div);
@@ -149,6 +156,13 @@
     checkoutDiv.className = 'checkout';
     checkoutDiv.innerHTML = `<button onclick="checkout()">Оформити замовлення</button>`;
     container.appendChild(checkoutDiv);
+  }
+
+  function updateQuantity(index, quantity) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart[index].quantity = parseInt(quantity);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    loadCart();
   }
 
   function removeItem(index) {

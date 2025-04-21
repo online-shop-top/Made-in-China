@@ -109,15 +109,15 @@
 
       orderText += `\n💰 Всього: ₴${total}`;
 
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      fetch(`https://made-in-china.pp.ua/api/send.php`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: orderText
-        })
+        body: new URLSearchParams({
+            key: "my-secret-key", // той самий секретний ключ, що й у PHP
+            order: orderData,
+        }),
       })
       .then(res => res.json())
       .then(data => {

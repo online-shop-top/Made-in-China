@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Made-in-China</title>
-  <link rel="icon" href="https://i.imgur.com/QX1OaOs.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://i.imgur.com/QX1OaOs.png" type="image/png" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     body {
@@ -47,8 +50,10 @@
       width: 250px;
       margin: 10px;
       padding: 15px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       text-align: center;
+      flex: 1 1 250px;
+      max-width: 300px;
     }
 
     .product img {
@@ -98,78 +103,104 @@
     footer a {
       color: #61dafb;
     }
+
+    /* Адаптація для мобільних */
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 20px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .catalog {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .product {
+        width: 90%;
+        max-width: 350px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+    }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Made-in-China</h1>
+    <p>Сучасні товари за доступною ціною — просто і зручно</p>
+  </header>
 
-<header>
-  <h1>Made-in-China</h1>
-  <p>Сучасні товари за доступною ціною — просто і зручно</p>
-</header>
+  <section class="hero">
+    <h2>Хіти сезону вже тут!</h2>
+    <p>Ознайомтесь з нашими найкращими пропозиціями</p>
+  </section>
 
-<section class="hero">
-  <h2>Хіти сезону з вже тут!</h2>
-  <p>Ознайомтесь з нашими найкращими пропозиціями</p>
-</section>
+  <section class="catalog" id="catalog">
+    <!-- Товари з'являться тут -->
+  </section>
 
-<section class="catalog" id="catalog">
-  <!-- Товари з'являться тут -->
-</section>
+  <footer>
+    <p>© 2025 Made-in-China | Зв’язок:
+      <a href="mailto:info@made-in-china.com">info@made-in-china.com</a>
+    </p>
+  </footer>
 
-<footer>
-  <p>© 2025 Made-in-China | Зв’язок: <a href="mailto:info@made-in-china.com">info@made-in-china.com</a></p>
-</footer>
+  <script>
+    const products = [
+      {
+        name: 'Навушники JBL Tune 510BT',
+        description: 'Bluetooth, до 40 годин роботи, стильний дизайн',
+        price: 1999,
+        image: 'https://via.placeholder.com/200x150?text=JBL+510BT'
+      },
+      {
+        name: 'Power Bank Xiaomi 10000mAh',
+        description: 'Швидка зарядка, 2 порти, металевий корпус',
+        price: 899,
+        image: 'https://via.placeholder.com/200x150?text=Xiaomi+PowerBank'
+      },
+      {
+        name: 'Мишка Logitech M185',
+        description: 'Бездротова, USB-адаптер, до 12 місяців роботи',
+        price: 499,
+        image: 'https://via.placeholder.com/200x150?text=Logitech+M185'
+      },
+      {
+        name: 'Колонка Xiaomi Mi Portable',
+        description: 'Bluetooth, 16 годин автономної роботи',
+        price: 1299,
+        image: 'https://via.placeholder.com/200x150?text=Mi+Speaker'
+      }
+    ];
 
-<script>
-  const products = [
-    {
-      name: "Навушники JBL Tune 510BT",
-      description: "Bluetooth, до 40 годин роботи, стильний дизайн",
-      price: 1999,
-      image: "https://via.placeholder.com/200x150?text=JBL+510BT"
-    },
-    {
-      name: "Power Bank Xiaomi 10000mAh",
-      description: "Швидка зарядка, 2 порти, металевий корпус",
-      price: 899,
-      image: "https://via.placeholder.com/200x150?text=Xiaomi+PowerBank"
-    },
-    {
-      name: "Мишка Logitech M185",
-      description: "Бездротова, USB-адаптер, до 12 місяців роботи",
-      price: 499,
-      image: "https://via.placeholder.com/200x150?text=Logitech+M185"
-    },
-    {
-      name: "Колонка Xiaomi Mi Portable",
-      description: "Bluetooth, 16 годин автономної роботи",
-      price: 1299,
-      image: "https://via.placeholder.com/200x150?text=Mi+Speaker"
+    function generateCatalog() {
+      const catalog = document.getElementById('catalog');
+      products.forEach((product, index) => {
+        const card = document.createElement('div');
+        card.className = 'product';
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <div class="price">₴${product.price}</div>
+          <a href="product.html" class="btn" onclick="viewProduct(${index})">Детальніше</a>
+        `;
+        catalog.appendChild(card);
+      });
     }
-  ];
 
-  function generateCatalog() {
-    const catalog = document.getElementById('catalog');
-    products.forEach((product, index) => {
-      const card = document.createElement('div');
-      card.className = 'product';
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        <div class="price">₴${product.price}</div>
-        <a href="product.html" class="btn" onclick="viewProduct(${index})">Детальніше</a>
-      `;
-      catalog.appendChild(card);
-    });
-  }
+    function viewProduct(index) {
+      localStorage.setItem('selectedProduct', JSON.stringify(products[index]));
+    }
 
-  function viewProduct(index) {
-    localStorage.setItem('selectedProduct', JSON.stringify(products[index]));
-  }
-
-  window.onload = generateCatalog;
-</script>
-
+    window.onload = generateCatalog;
+  </script>
 </body>
 </html>

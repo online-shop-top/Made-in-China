@@ -123,28 +123,28 @@
 <script>
   const products = [
     {
-      name: "Навушники JBL Tune 510BT",
-      description: "Bluetooth, до 40 годин роботи, стильний дизайн",
+      name: 'Навушники JBL Tune 510BT',
+      description: 'Bluetooth, до 40 годин роботи, стильний дизайн',
       price: 1999,
-      image: "https://via.placeholder.com/200x150?text=JBL+510BT"
+      image: 'https://via.placeholder.com/200x150?text=JBL+510BT'
     },
     {
-      name: "Power Bank Xiaomi 10000mAh",
-      description: "Швидка зарядка, 2 порти, металевий корпус",
+      name: 'Power Bank Xiaomi 10000mAh',
+      description: 'Швидка зарядка, 2 порти, металевий корпус',
       price: 899,
-      image: "https://via.placeholder.com/200x150?text=Xiaomi+PowerBank"
+      image: 'https://via.placeholder.com/200x150?text=Xiaomi+PowerBank'
     },
     {
-      name: "Мишка Logitech M185",
-      description: "Бездротова, USB-адаптер, до 12 місяців роботи",
+      name: 'Мишка Logitech M185',
+      description: 'Бездротова, USB-адаптер, до 12 місяців роботи',
       price: 499,
-      image: "https://via.placeholder.com/200x150?text=Logitech+M185"
+      image: 'https://via.placeholder.com/200x150?text=Logitech+M185'
     },
     {
-      name: "Колонка Xiaomi Mi Portable",
-      description: "Bluetooth, 16 годин автономної роботи",
+      name: 'Колонка Xiaomi Mi Portable',
+      description: 'Bluetooth, 16 годин автономної роботи',
       price: 1299,
-      image: "https://via.placeholder.com/200x150?text=Mi+Speaker"
+      image: 'https://via.placeholder.com/200x150?text=Mi+Speaker'
     }
   ];
 
@@ -154,11 +154,17 @@
       const card = document.createElement('div');
       card.className = 'product';
       card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
+        <a href="product.html" onclick="viewProduct(${index})">
+          <img src="${product.image}" alt="${product.name}">
+        </a>
+        <h3>
+          <a href="product.html" onclick="viewProduct(${index})" style="text-decoration: none; color: #007bff;">
+            ${product.name}
+          </a>
+        </h3>
         <p>${product.description}</p>
         <div class="price">₴${product.price}</div>
-        <a href="product.html" class="btn" onclick="viewProduct(${index})">Детальніше</a>
+        <button class="btn" onclick="buyProduct(${index})">Купити</button>
       `;
       catalog.appendChild(card);
     });
@@ -166,6 +172,10 @@
 
   function viewProduct(index) {
     localStorage.setItem('selectedProduct', JSON.stringify(products[index]));
+  }
+
+  function buyProduct(index) {
+    alert(`Ви додали "${products[index].name}" у кошик! (Функція буде реалізована пізніше)`);
   }
 
   window.onload = generateCatalog;

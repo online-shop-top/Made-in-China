@@ -114,6 +114,9 @@
 </section>
 
 <section class="catalog" id="catalog">
+<div id="toast" style="position: fixed; bottom: 20px; right: 20px; background: #28a745; color: white; padding: 12px 20px; border-radius: 5px; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000;">
+  Товар додано до кошика
+</div>
   <!-- Товари з'являться тут -->
 </section>
 
@@ -170,22 +173,31 @@
     window.location.href = "product.html";
   }
 
-  function addToCart(index) {
-    const product = products[index];
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function addToCart(index) {
+  const product = products[index];
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    const existingProductIndex = cart.findIndex(item => item.name === product.name);
+  const existingProductIndex = cart.findIndex(item => item.name === product.name);
 
-    if (existingProductIndex !== -1) {
-      cart[existingProductIndex].quantity += 1;
-    } else {
-      product.quantity = 1;
-      cart.push(product);
-    }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`Товар "${product.name}" додано до кошика`);
+  if (existingProductIndex !== -1) {
+    cart[existingProductIndex].quantity += 1;
+  } else {
+    product.quantity = 1;
+    cart.push(product);
   }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+  showToast(`Додано: "${product.name}"`);
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 2500);
+}
 
   window.onload = generateCatalog;
 </script>

@@ -59,7 +59,6 @@
       text-align: center;
       margin-top: 20px;
     }
-
   </style>
 </head>
 <body>
@@ -102,7 +101,6 @@
       }
 
       orderText += `\n\n📦 Товари:\n`;
-
       let total = 0;
       cart.forEach(item => {
         orderText += `• ${item.name} — ${item.quantity} шт. (₴${item.price})\n`;
@@ -126,6 +124,8 @@
         if (data.ok) {
           document.getElementById("successMsg").textContent = "Замовлення успішно надіслано!";
           localStorage.removeItem('cart');
+          alert("Дякуємо. Замовлення успішно надіслано!");
+          window.location.href = "index.html"; // Перехід на головну сторінку
         } else {
           alert("Помилка надсилання. Спробуйте ще раз.");
         }

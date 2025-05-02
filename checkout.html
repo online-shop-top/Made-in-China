@@ -136,7 +136,7 @@
                     alert('Замовлення успішно відправлено! Сповіщення надіслано в Telegram.');
                     document.getElementById("orderForm").reset();
                     localStorage.removeItem('cart');
-                    window.location.href = "index.html"; // Перенаправлення на головну сторінку
+                    window.location.replace("index.html"); // Перенаправлення на головну сторінку
                 } else {
                     alert('Виникла помилка при відправці сповіщення в Telegram.');
                     console.error('Помилка Telegram API:', data);

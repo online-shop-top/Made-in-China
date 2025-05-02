@@ -104,47 +104,35 @@
         });
 
         function sendTelegramNotification(orderData) {
-            const botToken = "8183148351:AAGytuw_-K87F175JLUWiGan8J816pliJdY";
-            const chatId = "2102040810";
-            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            const messageData = {
+                name: orderData.name,
+                phone: orderData.phone,
+                comment: orderData.comment,
+                cart: orderData.cart,
+                total: orderData.total,
+                secret: "your-secret-key" // той самий, що у NodeMCU
+            };
 
-            let message = "Нове замовлення!\n";
-            message += `Ім'я: ${orderData.name}\n`;
-            message += `Телефон: ${orderData.phone}\n`;
-            if (orderData.comment) {
-                message += `Коментар: ${orderData.comment}\n`;
-            }
-            message += "Товари:\n";
-            orderData.cart.forEach(item => {
-                message += `- ${item.name} (кількість: ${item.quantity}, ціна: ${item.price})\n`;
-            });
-            message += `Загальна сума: ${orderData.total}\n`;
-
-            fetch(apiUrl, {
+            fetch("http://http://176.37.86.109/new_order", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
-                })
+                body: JSON.stringify(messageData)
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('Замовлення успішно відправлено! Сповіщення надіслано в Telegram.');
+            .then(response => {
+                if (response.ok) {
+                    alert('Замовлення успішно відправлено через NodeMCU!');
                     document.getElementById("orderForm").reset();
                     localStorage.removeItem('cart');
-                    window.location.replace("index.html"); // Перенаправлення на головну сторінку
+                    window.location.replace("index.html");
                 } else {
-                    alert('Виникла помилка при відправці сповіщення в Telegram.');
-                    console.error('Помилка Telegram API:', data);
+                    alert('Помилка надсилання замовлення через NodeMCU.');
                 }
             })
             .catch(error => {
-                alert('Виникла мережева помилка при відправці сповіщення.');
-                console.error('Мережева помилка:', error);
+                alert('Мережева помилка при з’єднанні з NodeMCU.');
+                console.error(error);
             });
         }
     </script>

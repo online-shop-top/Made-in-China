@@ -104,36 +104,7 @@
         });
 
         function sendTelegramNotification(orderData) {
-            const messageData = {
-                name: orderData.name,
-                phone: orderData.phone,
-                comment: orderData.comment,
-                cart: orderData.cart,
-                total: orderData.total,
-                secret: "your-secret-key" // той самий, що у NodeMCU
-            };
-
-            fetch("http://http://176.37.86.109/new_order", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(messageData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('Замовлення успішно відправлено через NodeMCU!');
-                    document.getElementById("orderForm").reset();
-                    localStorage.removeItem('cart');
-                    window.location.replace("index.html");
-                } else {
-                    alert('Помилка надсилання замовлення через NodeMCU.');
-                }
-            })
-            .catch(error => {
-                alert('Мережева помилка при з’єднанні з NodeMCU.');
-                console.error(error);
-            });
+            alert("Функція виконується!");
         }
     </script>
 

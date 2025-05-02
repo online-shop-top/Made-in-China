@@ -134,9 +134,9 @@
             .then(data => {
                 if (data.ok) {
                     alert('Замовлення успішно відправлено! Сповіщення надіслано в Telegram.');
-                    document.getElementById("orderForm").reset(); // Очистити форму після успішної відправки
-                    localStorage.removeItem('cart'); // Очистити кошик
-                    // Можна додати перенаправлення на сторінку подяки тут
+                    document.getElementById("orderForm").reset();
+                    localStorage.removeItem('cart');
+                    window.location.href = "index.html"; // Перенаправлення на головну сторінку
                 } else {
                     alert('Виникла помилка при відправці сповіщення в Telegram.');
                     console.error('Помилка Telegram API:', data);

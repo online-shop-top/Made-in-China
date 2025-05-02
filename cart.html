@@ -98,7 +98,12 @@
       font-size: 18px;
       color: #666;
     }
-
+    
+    .btn {
+      display: inline-block; background: #007bff; color: white;
+      padding: 10px 15px; border-radius: 5px; text-decoration: none;
+    }
+    .btn:hover { background: #0056b3; }
     a.back {
       display: inline-block;
       margin-top: 20px;
@@ -126,7 +131,7 @@
     container.innerHTML = '';
 
     if (cart.length === 0) {
-      container.innerHTML = '<p class="empty">Ваш кошик порожній</p><a class="back" href="index.html">⬅ Назад до магазину</a>';
+      container.innerHTML = '<p class="empty">Ваш кошик порожній</p><a href="index.html" class="btn">Назад до каталогу</a>';
       return;
     }
 

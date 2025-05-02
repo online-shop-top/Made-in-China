@@ -1,134 +1,153 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Оформлення замовлення</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #f2f2f2;
-      padding: 20px;
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Оформлення замовлення</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+            margin: 0;
+        }
 
-    h2 {
-      text-align: center;
-    }
+        h2 {
+            text-align: center;
+        }
 
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    label {
-      display: block;
-      margin-top: 15px;
-    }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
 
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      background: #28a745;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-    button:hover {
-      background: #218838;
-    }
+        button:hover {
+            background: #218838;
+        }
 
-    .success {
-      color: green;
-      text-align: center;
-      margin-top: 20px;
-    }
-  </style>
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-  <h2>Оформлення замовлення</h2>
-  <form id="orderForm">
-    <label for="name">Ім’я</label>
-    <input type="text" id="name" required>
+    <h2>Оформлення замовлення</h2>
+    <form id="orderForm">
+        <label for="name">Ім’я</label>
+        <input type="text" id="name" name="Ім'я" required>
 
-    <label for="phone">Телефон</label>
-    <input type="text" id="phone" required>
+        <label for="phone">Телефон</label>
+        <input type="text" id="phone" name="Телефон" required>
 
-    <label for="message">Коментар (необов’язково)</label>
-    <textarea id="message" rows="3"></textarea>
+        <label for="message">Коментар (необов’язково)</label>
+        <textarea id="message" name="Коментар" rows="3"></textarea>
 
-    <button type="submit">Надіслати замовлення</button>
-    <div class="success" id="successMsg"></div>
-  </form>
+        <button type="submit">Надіслати замовлення</button>
+        <div class="success" id="successMsg"></div>
+    </form>
 
-  <script>
-    async function sendOrderToProxy(orderData) {
-      try {
-        const response = await fetch('http://176.37.86.109/new_order', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(orderData)
+    <script>
+        document.getElementById("orderForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const comment = document.getElementById("message").value.trim();
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length === 0) {
+                alert("Кошик порожній!");
+                return;
+            }
+
+            const orderDetails = {
+                name: name,
+                phone: phone,
+                comment: comment,
+                cart: cart,
+                total: cart.reduce((sum, item) => sum + item.quantity * item.price, 0)
+            };
+
+            sendTelegramNotification(orderDetails);
         });
 
-        if (!response.ok) {
-          console.error('Помилка відправлення замовлення на проксі-сервер:', response.status);
-          alert('Помилка надсилання замовлення. Спробуйте ще раз.');
-        } else {
-          console.log('Замовлення успішно відправлено на проксі-сервер');
-          document.getElementById("successMsg").textContent = "Замовлення успішно надіслано!";
-          localStorage.removeItem('cart');
-          alert("Дякуємо. Замовлення успішно надіслано!");
-          window.location.href = "index.html";
+        function sendTelegramNotification(orderData) {
+            const botToken = "8183148351:AAGytuw_-K87F175JLUWiGan8J816pliJdY";
+            const chatId = "2102040810";
+            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            let message = "Нове замовлення!\n";
+            message += `Ім'я: ${orderData.name}\n`;
+            message += `Телефон: ${orderData.phone}\n`;
+            if (orderData.comment) {
+                message += `Коментар: ${orderData.comment}\n`;
+            }
+            message += "Товари:\n";
+            orderData.cart.forEach(item => {
+                message += `- ${item.name} (кількість: ${item.quantity}, ціна: ${item.price})\n`;
+            });
+            message += `Загальна сума: ${orderData.total}\n`;
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Замовлення успішно відправлено! Сповіщення надіслано в Telegram.');
+                    document.getElementById("orderForm").reset(); // Очистити форму після успішної відправки
+                    localStorage.removeItem('cart'); // Очистити кошик
+                    // Можна додати перенаправлення на сторінку подяки тут
+                } else {
+                    alert('Виникла помилка при відправці сповіщення в Telegram.');
+                    console.error('Помилка Telegram API:', data);
+                }
+            })
+            .catch(error => {
+                alert('Виникла мережева помилка при відправці сповіщення.');
+                console.error('Мережева помилка:', error);
+            });
         }
-      } catch (error) {
-        console.error('Помилка під час відправлення замовлення:', error);
-        alert("Помилка з'єднання з проксі-сервером. Спробуйте пізніше.");
-      }
-    }
-
-    document.getElementById("orderForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const comment = document.getElementById("message").value.trim();
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-      if (cart.length === 0) {
-        alert("Кошик порожній!");
-        return;
-      }
-
-      const orderDetails = {
-        name: name,
-        phone: phone,
-        comment: comment,
-        cart: cart,
-        total: cart.reduce((sum, item) => sum + item.quantity * item.price, 0)
-      };
-
-      sendOrderToProxy(orderDetails);
-    });
-  </script>
+    </script>
 
 </body>
 </html>

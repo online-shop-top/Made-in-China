@@ -72,15 +72,16 @@
     document.getElementById('productDetails').innerHTML = '<p>Помилка завантаження товару.</p>';
   }
   function showImage(index) {
-    const images = product.image;
-    const imgElement = document.getElementById("productImage");
-    currentImage = (index + images.length) % images.length;
-    imgElement.src = images[currentImage];
+  const images = product.image;
+  const imgElement = document.getElementById("productImage");
+  currentImage = (index + images.length) % images.length;
+  imgElement.src = images[currentImage];
   }
-  function nextImage() {
+
+  window.nextImage = function () {
     showImage(currentImage + 1);
   }
-  function prevImage() {
+  window.prevImage = function () {
     showImage(currentImage - 1);
   }
 </script>

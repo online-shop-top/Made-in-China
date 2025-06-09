@@ -80,6 +80,7 @@
         <a href="index.html" class="btn">← Назад до каталогу</a>
         <a href="#" class="btn" onclick="addToCart()">Купити</a>
       `;
+      showImage(0);
       window.addToCart = function () {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existing = cart.findIndex(item => item.name === product.name);

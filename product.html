@@ -27,6 +27,26 @@
       display: inline-block; background: #007bff; color: white;
       padding: 10px 15px; border-radius: 5px; text-decoration: none; margin: 5px;
     }
+    .image-gallery {
+      display: flex;
+      align-items: center;       /* Вирівнює по вертикалі */
+      justify-content: center;   /* Центрує по горизонталі */
+      gap: 10px;                 /* Відступ між кнопками і зображенням */
+    }
+    .image-gallery button {
+      font-size: 24px;
+      height: 40px;
+      width: 40px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .image-gallery button:hover {
+      background: #0056b3;
+    }
+
     .btn:hover { background: #0056b3; }
   </style>
 </head>
@@ -49,9 +69,9 @@
         .join('');
 
       document.getElementById('productDetails').innerHTML = `
-        <div>
+        <div class="image-gallery">
           <button onclick="prevImage()">⟵</button>
-          <img id="productImage" src="${product.image[0]}" alt="${product.name}" style="max-width: 50%; border-radius: 10px; margin: 0 10px;">
+          <img id="productImage" src="..." alt="..." />
           <button onclick="nextImage()">⟶</button>
         </div>
         <h1>${product.name}<br>${product.name2}</h1>

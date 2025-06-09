@@ -143,7 +143,7 @@
       const div = document.createElement('div');
       div.className = 'item';
       div.innerHTML = `
-        <img src="${item.image}" alt="${item.name}">
+        <img src="${item.image[0]}" alt="${item.name}">
         <h3>${item.name}</h3>
         <div class="price">₴${item.price * item.quantity}</div>
         <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">

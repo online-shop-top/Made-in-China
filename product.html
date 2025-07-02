@@ -2,6 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Деталі товару | Made-in-China</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -49,7 +50,7 @@
       document.getElementById('productDetails').innerHTML = `
         <div class="image-gallery">
           <button onclick="prevImage()">⟵</button>
-          <img id="productImage" src="..." alt="..." />
+          <img id="productImage" src="${product.image[0]}" alt="${product.name}" />
           <button onclick="nextImage()">⟶</button>
         </div>
         <h1>${product.name}</h1>
